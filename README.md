@@ -139,14 +139,14 @@ Les résultats obtenus sur **le même jeu de validation** avec différents modè
 
 *Répondez précisément aux questions ci-dessous. Utilisez des chiffres, tableaux ou références à vos graphiques pour justifier vos réponses.*
 
-#### **Q1. Pourquoi utilise-t-on principalement le F1-score plutôt que l’accuracy pour cette tâche ?**
+### **Q1. Pourquoi utilise-t-on principalement le F1-score plutôt que l’accuracy pour cette tâche ?**
 
 L’accuracy peut très vite nous induire en erreur. Dans le secteur hôtelier, les réservations maintenues sont généralement bien plus nombreuses que les annulations. Un modèle paresseux qui prédirait que personne n'annule jamais afficherait un taux de bonnes réponses très élevé, tout en étant totalement incapable de repérer les vrais annulations.
 
 C'est là que le F1-score prend tout son sens. En combinant la précision (quand le modèle prédit une annulation, a-t-il raison ?) et le rappel (parmi toutes les vraies annulations, combien en a-t-on attrapées ?), il cherche un juste équilibre. Pour l'hôtel, l'enjeu est clair : capturer un maximum d'annulations sans déclencher une pluie de fausses alertes.
 
 
-#### **Q2. Dans ce contexte, qu’est-ce qui est le plus grave : un faux positif ou un faux négatif ?**
+### **Q2. Dans ce contexte, qu’est-ce qui est le plus grave : un faux positif ou un faux négatif ?**
 
 Les deux erreurs ne se valent pas et dépendent avant tout de la stratégie de l'hôtel.
 
@@ -157,11 +157,11 @@ Les deux erreurs ne se valent pas et dépendent avant tout de la stratégie de l
 Si l'hôtel utilise notre modèle pour envoyer de simples rappels de politesse, un faux positif n'a aucun impact négatif. En revanche, si l'hôtel pratique du surbooking agressif et qu'un client fidèle arrive sans trouver de chambre disponible, les dégâts sur sa réputation seront bien plus graves que le coût d'une chambre vide.
 
 
-#### **Q3. Quelles variables créées par feature engineering ont le plus amélioré votre modèle par rapport à la régression logistique de référence ?**
+### **Q3. Quelles variables créées par feature engineering ont le plus amélioré votre modèle par rapport à la régression logistique de référence ?**
 
 *(Listez les variables, expliquez leur construction et quantifiez le gain observé.)*
 
-#### **Q4. Pourquoi un découpage aléatoire simple peut-il produire une évaluation trompeuse sur ce dataset ?**
+### **Q4. Pourquoi un découpage aléatoire simple peut-il produire une évaluation trompeuse sur ce dataset ?**
 
 Utiliser un simple train_test_split aléatoire aurait faussé nos résultats par du data leakage (fuite de données). En mélangeant le passé et le futur, le modèle apprendrait à partir d'événements futurs pour "prédire" des événements passés, affichant des performances anormalement élevées en laboratoire, mais décevantes sur le terrain.
 
@@ -171,7 +171,7 @@ Nous avons donc opté pour une validation temporelle stricte :
 
 > ***Validation*** : Les 20 % les plus récentes.
 
-#### **Q5. Quels profils ou scénarios de réservation sont les plus fréquemment associés aux annulations dans vos analyses ?**
+### **Q5. Quels profils ou scénarios de réservation sont les plus fréquemment associés aux annulations dans vos analyses ?**
 
 - *(profil ou scénario 1)*
 - *(profil ou scénario 2)*
@@ -180,19 +180,19 @@ Nous avons donc opté pour une validation temporelle stricte :
 
 *Attention : décrivez des circonstances observables et des interactions entre variables. Ne présentez pas une région ou une population comme étant intrinsèquement à risque.*
 
-#### **Q6. Comment votre pipeline traite-t-il les valeurs manquantes et les catégories jamais observées pendant l’entraînement ?**
+### **Q6. Comment votre pipeline traite-t-il les valeurs manquantes et les catégories jamais observées pendant l’entraînement ?**
 
 *(Votre réponse ici. Précisez comment vous avez évité la fuite de données.)*
 
-#### **Q7. Selon vous, quelle action l’hôtel devrait-il entreprendre lorsqu’une réservation en cours présente une forte probabilité d’annulation ?**
+### **Q7. Selon vous, quelle action l’hôtel devrait-il entreprendre lorsqu’une réservation en cours présente une forte probabilité d’annulation ?**
 
 *(Votre réponse ici. Proposez une intervention proportionnée qui n’annule pas automatiquement la réservation du client.)*
 
-#### **Q8. Votre modèle présente-t-il des performances comparables selon les régions ou les types de destination ?**
+### **Q8. Votre modèle présente-t-il des performances comparables selon les régions ou les types de destination ?**
 
 *(Présentez au moins une comparaison chiffrée et discutez les limites liées aux petits sous-groupes.)*
 
-#### **Q9. Analyse des erreurs**
+### **Q9. Analyse des erreurs**
 
 Analysez au minimum :
 
