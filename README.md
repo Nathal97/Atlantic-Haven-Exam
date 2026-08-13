@@ -91,7 +91,7 @@ Plusieurs architectures de modèles ont été expérimentées et comparées :
 
 ### Mots-clés
 
-Regression logistique, annulation, validation temporelle, F1-score, feature engineering
+Regression logistique, LightGBM, Random Forest, validation temporelle, F1-score, feature engineering, 
 
 ---
 
@@ -99,11 +99,10 @@ Regression logistique, annulation, validation temporelle, F1-score, feature engi
 
 Voici la liste des fichiers et liens importants permettant d’évaluer votre travail :
 
-- **notebook.ipynb** : code complet de l’EDA, du prétraitement, de la modélisation et de l’évaluation ;
+- **EXAM.ipynb** : code complet de l’EDA, du prétraitement, de la modélisation et de l’évaluation ;
 - **submission.csv** : prédictions sur `reservations_test.csv` ;
-- **README.md** : présent rapport complété ;
+- **README.md** : le rapport ;
 - **requirements.txt** : dépendances nécessaires à la reproduction du projet *(si nécessaire)* ;
-- *(ajoutez ici les autres fichiers utiles sans inclure les fichiers temporaires).* 
 
 **🔗 Liens utiles :**
 
@@ -173,20 +172,59 @@ Nous avons donc opté pour une validation temporelle stricte :
 
 ### **Q5. Quels profils ou scénarios de réservation sont les plus fréquemment associés aux annulations dans vos analyses ?**
 
-- *(profil ou scénario 1)*
-- *(profil ou scénario 2)*
-- *(profil ou scénario 3)*
-- *(...)*
+#### Scénario 1 : La réservation très anticipée à long délai d'attente (lead_time élevé)
 
-*Attention : décrivez des circonstances observables et des interactions entre variables. Ne présentez pas une région ou une population comme étant intrinsèquement à risque.*
+&nbsp;&nbsp;&nbsp;&nbsp; Circonstances : Réservation effectuée plusieurs mois à l'avance sans prépaiement ni demande spéciale.
+
+&nbsp;&nbsp;&nbsp;&nbsp; Interaction : lead_time_jours > 120 jours ET demandes_speciales = 0.
+
+#### Scénario 2 : Le client au comportement d'annulation récurrent
+
+&nbsp;&nbsp;&nbsp;&nbsp; Circonstances : Client ayant un historique d'annulations antérieures non négligeable.
+
+&nbsp;&nbsp;&nbsp;&nbsp; Interaction : annulations_passees > 0 ET reservations_passees faible.
+
+#### Scénario 3 : Le séjour individuel/affaires sans engagement particulier
+
+&nbsp;&nbsp;&nbsp;&nbsp; Circonstances : Réservation individuelle enregistrant zéro demande spéciale et aucune modification.
+
+&nbsp;&nbsp;&nbsp;&nbsp; Interaction : segment_client = "affaires" ou "solo" ET modifications_reservation = 0 ET demandes_speciales = 0.
+
+#### Scénario 4 : La réservation restée sur liste d'attente
+
+&nbsp;&nbsp;&nbsp;&nbsp; Circonstances : Réservation ayant passé plusieurs jours en attente avant confirmation.
+
+&nbsp;&nbsp;&nbsp;&nbsp; Interaction : jours_liste_attente > 0.
 
 ### **Q6. Comment votre pipeline traite-t-il les valeurs manquantes et les catégories jamais observées pendant l’entraînement ?**
 
-*(Votre réponse ici. Précisez comment vous avez évité la fuite de données.)*
+#### 1. Traitement des valeurs manquantes (pour éviter la fuite de données)
+* Variables numériques (ex: demandes_speciales) : Imputation par la médiane calculée exclusivement sur le jeu d'entraînement.
+
+* Variables catégorielles (ex: agent_id) : Remplacement des valeurs manquantes par la catégorie "Inconnu" ou "Aucun".
+
+* Principe d'étanchéité : Les transformateurs de prétraitement sont ajustés (fit) uniquement sur le Train Set, puis appliqués (transform) sur les jeux de Validation et Test.
+
+#### 2. Gestion des catégories inédites (Unseen categories)
+* One-Hot Encoding : Utilisation de l'argument handle_unknown='ignore' dans l'encodeur OneHotEncoder de scikit-learn.
+* Target / Frequency Encoding : Les nouvelles catégories non vues lors de l'entraînement sont automatiquement regroupées sous une catégorie générique "Autre" ou remplacées par la valeur moyenne globale du Train Set.
+
 
 ### **Q7. Selon vous, quelle action l’hôtel devrait-il entreprendre lorsqu’une réservation en cours présente une forte probabilité d’annulation ?**
+Pour éviter de dégrader l'expérience client tout en sécurisant le chiffre d'affaires, l'hôtel doit privilégier une intervention progressive et non intrusive :
 
-*(Votre réponse ici. Proposez une intervention proportionnée qui n’annule pas automatiquement la réservation du client.)*
+* #### Prise de contact proactive et personnalisée : ####
+Envoyer un e-mail ou SMS de pré-séjour proposant des services complémentaires (choix de la chambre, surclassement à tarif préférentiel, réservation de navette).
+
+* #### Incitation à la confirmation/prépaiement : ####
+Proposer une remise modérée (ex: -5 %) ou le petit-déjeuner offert en échange de la validation définitive du séjour en tarif non remboursable.
+
+* #### Procédures de relance automatisées : ####
+Déclencher un rappel automatique à l'approche de la date limite d'annulation gratuite demandant la confirmation des heures d'arrivée.
+
+* #### Ajustement stratégique de l'overbooking : ####
+Ajuster le quota de surréservation de manière très ciblée uniquement sur les catégories de chambres concernées par ces hauts risques d'annulation.
+
 
 ### **Q8. Votre modèle présente-t-il des performances comparables selon les régions ou les types de destination ?**
 
@@ -219,7 +257,7 @@ Analysez au minimum :
 
 - version de Python : Python 3.11.9
 - principales bibliothèques (et versions) : sklearn, numpy, matplotlib, pandas, seaborn
-- graine(s) aléatoire(s) :
+- graine(s) aléatoire(s) : 42
 - commande ou procédure d’exécution :
 - durée approximative d’entraînement :
 - environnement utilisé : Google Colab
