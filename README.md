@@ -15,7 +15,7 @@
 | :--- | :--- | :--- | :--- |
 | 06 | RAZAFIMANANTSOA Nathalie Malalasoa Kantoniaina| ISAIA 4 | Data Scientist |
 | 07 | ANDRIAMANARIVO Tahiana Miora | ISAIA 4 | Rédacteur & Pitcher (README & Vidéo) |
-| 08 | RATSIMISETRA Hasiniaina | ISAIA 4 | Présentateur |
+| 08 | RATSIMISETRA Hasiniaina | ISAIA 4 | Data scientist et Présentateur |
 | 11 | RAZANADRAKOTO Noël Patrick | ISAIA 4  | Feature Engineer |
 | 12 | RAMIARANJAKAHARIMANANA Mendrika Harinjato | ISAIA 4 | Rédacteur & Pitcher (README & Vidéo) |
 | 13 | RATSIMAHOLINANDRASANA Antsa Nifaliana| ISAIA 4 | Responsable de la modélisation |
@@ -38,7 +38,7 @@ Atlantic Haven Hotels fait face à un taux d’annulation élevé, ce qui rend d
 
 #### Mots-clés
 
-*(Indiquez cinq à huit mots-clés techniques ou métier, par exemple : classification binaire, annulation, validation temporelle, F1-score, feature engineering.)*
+Regression logistique, annulation, validation temporelle, F1-score, feature engineering
 
 ---
 
@@ -85,11 +85,21 @@ Présentez les résultats obtenus sur **le même jeu de validation** afin que la
 
 #### **Q1. Pourquoi utilise-t-on principalement le F1-score plutôt que l’accuracy pour cette tâche ?**
 
-*(Votre réponse ici.)*
+L’accuracy peut très vite nous induire en erreur. Dans le secteur hôtelier, les réservations maintenues sont généralement bien plus nombreuses que les annulations. Un modèle paresseux qui prédirait que personne n'annule jamais afficherait un taux de bonnes réponses très élevé, tout en étant totalement incapable de repérer les vrais annulations.
+
+C'est là que le F1-score prend tout son sens. En combinant la précision (quand le modèle prédit une annulation, a-t-il raison ?) et le rappel (parmi toutes les vraies annulations, combien en a-t-on attrapées ?), il cherche un juste équilibre. Pour l'hôtel, l'enjeu est clair : capturer un maximum d'annulations sans déclencher une pluie de fausses alertes.
+
 
 #### **Q2. Dans ce contexte, qu’est-ce qui est le plus grave : un faux positif ou un faux négatif ?**
 
-*(Définissez d’abord les deux erreurs dans le contexte hôtelier, puis justifiez votre réponse. Une réponse nuancée est possible.)*
+Les deux erreurs ne se valent pas et dépendent avant tout de la stratégie de l'hôtel.
+
+* **Le Faux Négatif** (la non-détection) : C'est le client qui annule au dernier moment alors que le modèle pensait qu'il viendrait. Financièrement, c'est un coup dur : la chambre reste vide, bloquée trop tard pour être relouée.
+
+* **Le Faux Positif** (la fausse alerte) : C'est prédire une annulation alors que le client finit par se présenter.
+
+Si l'hôtel utilise notre modèle pour envoyer de simples rappels de politesse, un faux positif n'a aucun impact négatif. En revanche, si l'hôtel pratique du surbooking agressif et qu'un client fidèle arrive sans trouver de chambre disponible, les dégâts sur sa réputation seront bien plus graves que le coût d'une chambre vide.
+
 
 #### **Q3. Quelles variables créées par feature engineering ont le plus amélioré votre modèle par rapport à la régression logistique de référence ?**
 
@@ -97,7 +107,13 @@ Présentez les résultats obtenus sur **le même jeu de validation** afin que la
 
 #### **Q4. Pourquoi un découpage aléatoire simple peut-il produire une évaluation trompeuse sur ce dataset ?**
 
-*(Expliquez votre stratégie de validation temporelle et indiquez les dates ou proportions utilisées.)*
+Utiliser un simple train_test_split aléatoire aurait faussé nos résultats par du data leakage (fuite de données). En mélangeant le passé et le futur, le modèle apprendrait à partir d'événements futurs pour "prédire" des événements passés, affichant des performances anormalement élevées en laboratoire, mais décevantes sur le terrain.
+
+Nous avons donc opté pour une validation temporelle stricte :
+
+> ***Entraînement*** : Les 80 % de réservations les plus anciennes chronologiquement.
+
+> ***Validation*** : Les 20 % les plus récentes.
 
 #### **Q5. Quels profils ou scénarios de réservation sont les plus fréquemment associés aux annulations dans vos analyses ?**
 
@@ -145,12 +161,12 @@ Analysez au minimum :
 
 ### **7. Reproductibilité**
 
-- version de Python :
-- principales bibliothèques et versions :
+- version de Python : Python 3.11.9
+- principales bibliothèques (et versions) : LogisticRegression, numpy, matplotlib, pandas, seaborn
 - graine(s) aléatoire(s) :
 - commande ou procédure d’exécution :
 - durée approximative d’entraînement :
-- environnement utilisé : *(local, Google Colab, Kaggle, etc.)*
+- environnement utilisé : Google Colab
 
 ---
 
