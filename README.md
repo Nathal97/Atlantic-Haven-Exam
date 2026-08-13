@@ -176,7 +176,7 @@ Analysez au minimum :
 - *`Sklearn documentation`* — https://scikit-learn.org/0.21/documentation.html
 - *`LightGBM`* — https://lightgbm.readthedocs.io/en/stable/Parameters.html
 - *`XGBoost`* — https://xgboost.readthedocs.io/en/stable/
-- *`Matplotlib`* - https://matplotlib.org/stable/index.html
+- *`Matplotlib`* — https://matplotlib.org/stable/index.html
 
 #### &nbsp;&nbsp;&nbsp;&nbsp; b. Assistants IA
 
