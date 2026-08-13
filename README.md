@@ -107,22 +107,25 @@ Voici la liste des fichiers et liens importants permettant d’évaluer votre tr
 
 **🔗 Liens utiles :**
 
-- [**LIEN VERS LA VIDÉO DE PRÉSENTATION** — Google Drive ou YouTube](https://www.youtube.com/)
-- [Lien vers le dépôt GitHub](https://github.com/)
-- [Lien vers une autre ressource — facultatif](https://www.google.com/)
+- Lien vers la vidéo de présentation — Google Drive (https://drive.google.com/drive/folders/11k-bcwkn8nblvOZ3iNHbIZaRQGAUpQEM)
+- Lien vers le dépôt GitHub (https://github.com/Nathal97/Atlantic-Haven-Exam/)
 
 ---
 
 ## **IV. Résultats de Modélisation**
 
-Présentez les résultats obtenus sur **le même jeu de validation** afin que la comparaison soit valide.
+Les résultats obtenus sur **le même jeu de validation** avec différents modèle.
+
+### Comparaison des Modèles (Données non-featurées)
 
 | Modèle | Paramètres principaux | F1-score | Précision | Rappel | ROC-AUC |
 |---|---|---:|---:|---:|---:|
-| Régression logistique — baseline |  |  |  |  |  |
-| Modèle 2 |  |  |  |  |  |
-| Modèle 3 |  |  |  |  |  |
-| Modèle final |  |  |  |  |  |
+| **Régression Logistique (Baseline)** | `C=0.0189`, `penalty='l1'`, `solver='liblinear'`, `class_weight='balanced'` | **0.4699** | 0.3538 | 0.6993 | 0.6623 |
+| **Random Forest** | `n_estimators=300`, `max_depth=8`, `class_weight='balanced_subsample'` | **0.4761** | 0.3502 | 0.7436 | 0.6465 |
+| **LightGBM (Modèle Final)** | `n_estimators=500`, `lr=0.0143`, `max_depth=4`, `scale_pos_weight=3.39` | **0.4821** | 0.3578 | 0.7389 | 0.6566 |
+
+---
+
 
 **Seuil de décision retenu :** *(votre réponse ici)*
 
@@ -240,7 +243,7 @@ Analysez au minimum :
 #### Claude Code
 - **Développement & Refactoring :** Écriture des scripts Python, création des pipelines et modularisation du code.
 - **Qualité & Conformité :** Vérification automatisée de la reproductibilité.
---
+
 ### &nbsp;&nbsp;&nbsp;&nbsp; 3. License
 * **Code source :** Distribué sous licence **MIT**
 * **Données :** Les données fournies (`reservations_train.csv`, `reservations_test.csv`) sont entièrement synthétiques, fournies par l'ISPM à des fins strictement pédagogiques pour l'examen final S2 (Année universitaire 2025-2026).
