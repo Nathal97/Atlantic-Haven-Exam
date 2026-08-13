@@ -162,7 +162,7 @@ Analysez au minimum :
 ### **7. Reproductibilité**
 
 - version de Python : Python 3.11.9
-- principales bibliothèques (et versions) : LogisticRegression, numpy, matplotlib, pandas, seaborn
+- principales bibliothèques (et versions) : sklearn, numpy, matplotlib, pandas, seaborn
 - graine(s) aléatoire(s) :
 - commande ou procédure d’exécution :
 - durée approximative d’entraînement :
@@ -172,8 +172,24 @@ Analysez au minimum :
 
 ### **8. Bibliographie**
 
-*(Listez les livres, articles, documentations et liens ayant servi dans ce travail. Mentionnez également les outils d’IA générative utilisés et décrivez brièvement leur contribution.)*
+#### &nbsp;&nbsp;&nbsp;&nbsp; a. Documentations et liens
+- *`Sklearn documentation`* — https://scikit-learn.org/0.21/documentation.html
+- *`LightGBM`* — https://lightgbm.readthedocs.io/en/stable/Parameters.html
+- *`XGBoost`* — https://xgboost.readthedocs.io/en/stable/
+- *`Matplotlib`* - https://matplotlib.org/stable/index.html
 
-- Référence 1 :
-- Référence 2 :
-- Référence 3 :
+#### &nbsp;&nbsp;&nbsp;&nbsp; b. Assistants IA
+
+##### Gemini
+- **Cadrage & Rédaction :** Structuration de la problématique métier, de l'analyse d'erreurs et rédaction du rapport.
+- **Orientation méthodologique :** Prise en main du protocole de validation temporelle et stratégie d'optimisation du F1-score.
+
+##### Claude Code
+- **Développement & Refactoring :** Écriture des scripts Python, création des pipelines et modularisation du code.
+- **Qualité & Conformité :** Vérification automatisée de la reproductibilité.
+--
+#### &nbsp;&nbsp;&nbsp;&nbsp; c. License
+* **Code source :** Distribué sous licence **MIT**
+* **Données :** Les données fournies (`reservations_train.csv`, `reservations_test.csv`) sont entièrement synthétiques, fournies par l'ISPM à des fins strictement pédagogiques pour l'examen final S2 (Année universitaire 2025-2026).
+* **Usage :** Ce dépôt est destiné à l'évaluation académique du cours de Machine Learning & Data Science (Master 1 - ISPM).
+
